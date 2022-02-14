@@ -1,12 +1,12 @@
 {
-  "author": "Nicholas Penree <drudge@conceited.net> (http://penr.ee)",
-  "name": "gpg",
-  "description": "GPG encryption and decryption in node.js by way of the gpg command-line tool",
-  "version": "0.6.0",
+  "author": "Zeller",
+  "name": "gpg-with-err-handling",
+  "description": "This is an enhancement over gpg nmp module which includes error handling in decryotion",
+  "version": "1.0.0",
   "repository": {
-    "type": "git",
-    "url": "git://github.com/drudge/node-gpg.git"
-  },
+		"type": "git",
+		"url": "git+https://github.com/vivmehra/gpg-with-error-handling"
+	},
   "keywords": [
     "gpg",
     "encrypt",
@@ -27,10 +27,7 @@
     "pretest": "eslint .",
     "test": "mocha"
   },
-  "bugs": {
-    "url": "https://github.com/drudge/node-gpg/issues"
-  },
-  "homepage": "https://github.com/drudge/node-gpg#readme",
+  "homepage": "https://github.com/vivmehra/gpg-with-error-handling#readme",
   "directories": {
     "example": "examples",
     "test": "test"

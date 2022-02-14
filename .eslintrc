@@ -10,7 +10,11 @@
     "consistent-return": 0,
     "camelcase": 0
   },
-  env: {
-    "node": true
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8
   }
 }
