@@ -2,7 +2,7 @@
   "author": "Zeller",
   "name": "gpg-with-err-handling",
   "description": "This is an enhancement over gpg nmp module which includes error handling in decryotion",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": {
 		"type": "git",
 		"url": "git+https://github.com/vivmehra/gpg-with-error-handling"
