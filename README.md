@@ -41,10 +41,9 @@ In casual testing, encrypting a simple 400-character email to an El-Gamal key to
 but takes less than 0.1 seconds with `gpg` directly.
 
 ##Usage
-const gpg = require('gpg-with-err-handling');
-gpg.importKey(privateKey, [], (err, success) => {
-      // args needed in order to skip the password entry - can only
-      // be used with callStreaming
+
+ const gpg = require('gpg-with-err-handling');
+ gpg.importKey(privateKey, [], (err, success) => {
       console.log('success in importKey', success);
       console.log('err in importKey', err);
       if(!err){
