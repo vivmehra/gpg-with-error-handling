@@ -1,33 +1,31 @@
-# GPG Encryption/Decryption in Node.js
-[![travis][travis-image]][travis-url]
+# A wrapper node-gpg with error handling for bad passphrase and wrong secret key
 [![npm][npm-image]][npm-url]
 [![downloads][downloads-image]][downloads-url]
 
-[travis-image]: https://travis-ci.org/drudge/node-gpg.svg?branch=master
-[travis-url]: https://travis-ci.org/drudge/node-gpg
 
 [npm-image]: https://img.shields.io/npm/v/gpg.svg?style=flat
-[npm-url]: https://npmjs.org/package/gpg
+[npm-url]: https://www.npmjs.com/package/gpg-with-err-handling
 
 [downloads-image]: https://img.shields.io/npm/dm/gpg.svg?style=flat
-[downloads-url]: https://npmjs.org/package/gpg
+[downloads-url]: https://www.npmjs.com/package/gpg-with-err-handling
 
-This module is a wrapper around `gpg` for use within Node. Node-GPG takes care of spawning `gpg`, passing it
+This module is a wrapper around `Node-GPG` for use within Node. It takes care of spawning `gpg`, passing it
 the correct arguments, and piping input to stdin. It can also pipe input in from files and output out to files.
+It also helps you identified if the passphrase or secret key is wrong.
 
 Use Node-GPG if you are considering calling `gpg` directly from your application.
 
 ## Requirements
 
-In order to use Node-GPG, you'll need to have the `gpg` binary in your $PATH.
+In order to use gpg-with-err-handling, you'll need to have the `gpg` binary in your $PATH.
 
 ## Installation
 
-    npm install gpg
+    npm install gpg-with-err-handling
 
 ## Usage
 
-Node-GPG supports both direct calls to GPG with string arguments, and streaming calls for piping input and output
+Gpg-With-Err-Handling supports both direct calls to GPG with string arguments, and streaming calls for piping input and output
 from/to files.
 
 See [the source](lib/gpg.js) for more details.
@@ -42,10 +40,36 @@ In casual testing, encrypting a simple 400-character email to an El-Gamal key to
 [openpgpjs](https://github.com/openpgpjs/openpgpjs) and 14 seconds with [kbpgp](https://github.com/keybase/kbpgp),
 but takes less than 0.1 seconds with `gpg` directly.
 
+##Usage
+const gpg = require('gpg-with-err-handling');
+gpg.importKey(privateKey, [], (err, success) => {
+      // args needed in order to skip the password entry - can only
+      // be used with callStreaming
+      console.log('success in importKey', success);
+      console.log('err in importKey', err);
+      if(!err){
+        const args = [
+          '--pinentry-mode',
+          'loopback',
+          '--passphrase',
+          passphrase,
+        ];
+
+        gpg.callStreaming(<encrypted file stream>, <output file name>, args, async (error, data) => {
+            console.log('success in callStreaming', data);
+            console.log('error in callStreaming', error);
+            if(success) {
+              await <functionForProcessingOutputFile>(<arg>);
+            }
+        });
+      }
+    });
+  } catch (e) {
+    console.log("error", e);
+  }
 ## Contributors
 
-The following are the major contributors of `node-gpg` (in no specific order).
+The following are the major contributors of `gpg-with-err-handling` (in no specific order).
 
-  * Nicholas Penree ([drudge](http://github.com/drudge))
-  * [freewil](http://github.com/freewil)
-  * Samuel Reed [strml](http://github.com/strml)
+  * Vivek Mehra ([vivmehra](http://github.com/vivmehra))
+  * Hemant Singh [singhkumarhemant](https://github.com/singhkumarhemant)
