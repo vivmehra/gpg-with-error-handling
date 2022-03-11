@@ -1,4 +1,4 @@
-# A wrapper node-gpg with error handling for bad passphrase and wrong secret key
+# A wrapper on node-gpg with error handling for bad passphrase and wrong secret key
 [![npm][npm-image]][npm-url]
 [![downloads][downloads-image]][downloads-url]
 
@@ -27,6 +27,24 @@ In order to use gpg-with-err-handling, you'll need to have the `gpg` binary in y
 
 Gpg-With-Err-Handling supports both direct calls to GPG with string arguments, and streaming calls for piping input and output
 from/to files.
+```
+    gpg.importKey(privateKey, [], (err, success) => {
+      if(!err){
+          const args = [
+            '--pinentry-mode',
+            'loopback',
+            '--passphrase',
+            passphrase,
+          ];
+
+        gpg.callStreaming(<encrypted file stream>, <output file name>, args, async (error, data) => {
+            if(success) {
+              // post success logic
+            }
+        });
+      }
+    });
+```
 
 See [the source](lib/gpg.js) for more details.
 
@@ -40,32 +58,7 @@ In casual testing, encrypting a simple 400-character email to an El-Gamal key to
 [openpgpjs](https://github.com/openpgpjs/openpgpjs) and 14 seconds with [kbpgp](https://github.com/keybase/kbpgp),
 but takes less than 0.1 seconds with `gpg` directly.
 
-##Usage
-
- const gpg = require('gpg-with-err-handling');
- gpg.importKey(privateKey, [], (err, success) => {
-      console.log('success in importKey', success);
-      console.log('err in importKey', err);
-      if(!err){
-        const args = [
-          '--pinentry-mode',
-          'loopback',
-          '--passphrase',
-          passphrase,
-        ];
-
-        gpg.callStreaming(<encrypted file stream>, <output file name>, args, async (error, data) => {
-            console.log('success in callStreaming', data);
-            console.log('error in callStreaming', error);
-            if(success) {
-              await <functionForProcessingOutputFile>(<arg>);
-            }
-        });
-      }
-    });
-  } catch (e) {
-    console.log("error", e);
-  }
+ 
 ## Contributors
 
 The following are the major contributors of `gpg-with-err-handling` (in no specific order).
